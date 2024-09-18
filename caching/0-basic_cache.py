@@ -3,15 +3,18 @@
 from base_caching import BaseCaching
 
 class BasicCache(BaseCaching):
-     """ Basic caching system with no limit """
-     def put(self, key, item):
-          """
+    """
+    BasicCache
+    """
+
+    def put(self, key, item):
+        """
         assign to the dictionary
         """
-          if key is not None and item is not None:
-               self.cache_data[key] = item
+        if (key is not None and item is not None):
+            self.cache_data[key] = item
 
-     def get(self, key):
+    def get(self, key):
         """
         return the value linked to key
         """
@@ -20,4 +23,3 @@ class BasicCache(BaseCaching):
         else:
             return self.cache_data[key]
         
-               
