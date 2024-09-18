@@ -1,37 +1,41 @@
 #!/usr/bin/python3
-""" FIFOCache module that inherits from BaseCaching """
-from base_caching import BaseCaching
+"""
+FIFO caching
+"""
+
+
+BaseCaching = __import__('base_caching').BaseCaching
+
 
 class FIFOCache(BaseCaching):
     """
     FIFO Cache class
     """
+
     def __init__(self):
         """
         overload
         """
         super().__init__()
-        self.order = []
 
     def put(self, key, item):
         """
         dictionary
         """
-        if key is None or item is None:
-            return
-        
-        if key not in self.cache_data:
-            self.order.append(key)
-        self.chache_data[key] = item
-
-        if len(self.cache_data) > BaseCaching.MAX_ITEMS:
-            first_key = self.order.pop(0)
-            del self.cache_data[first_key]
-            print(f"DISCARD: {first_key}")
+        if key and item:
+            self.cache_data.update({key: item})
+            if len(self.cache_data) > BaseCaching.MAX_ITEMS:
+                for k, v in self.cache_data.items():
+                    print('DISCARD:', list(self.cache_data.keys())[0])
+                    break
+                self.cache_data.pop(k)
+            else:
+                pass
 
     def get(self, key):
-        """ 
-        Retrieve an item from the cache
         """
-        return self.cache_data.get(key, None)
-
+        get key
+        """
+        if key is None:
+            return None
+        return self.cache_data.get(key)
