@@ -15,17 +15,28 @@ def home():
     """return a json pauload with a welcome message"""
     return jsonify({"message": "Bienvenue"})
 
-@app.route("/users", methods=["POST"])
-def register_user():
-    """Post /users route to registre a new user"""
-    email = request.form.get("email")
-    paswword = request.form.get("paswword")
+@app.route('/', methods=['GET'], strict_slashes=False)
+def message():
+    """
+    Method that returns a JSON welcome message
+    """
+    return jsonify({"message": "Bienvenue"})
 
+
+@app.route('/users', methods=['POST'], strict_slashes=False)
+def users():
+    """
+    Method that registers a new user if it doesnt exist
+    or returns a warning message if it does
+    """
+    email = request.form.get('email')
+    password = request.form.get('password')
     try:
-        user = AUTH.register_user(email, paswword)
-        return jsonify({"email": user.email, "message": "user created"}), 200
-    except ValueError:
-        return jsonify({"message": "email already registred"}), 400
+        AUTH.register_user(email, password)
+        return jsonify({"email": email, "message": "user created"}), 200
+    except Exception:
+        return jsonify({"message": "email already registered"}), 400
+
     
 
 if __name__ == "__main__":
