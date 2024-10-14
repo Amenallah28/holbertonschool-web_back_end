@@ -35,16 +35,10 @@ class Auth:
         Method to register a new user in the database
         """
         try:
-            # Check if the user already exists by email
             existing_user = self._db.find_user_by(email=email)
-            # If the user exists, raise a ValueError
-            raise ValueError(f"User {email} already exists")
-        
+            raise ValueError
         except NoResultFound:
-            # If the user does not exist, proceed with registration
-            hashed_password = _hash_password(password)  # Hash the password
-            
-            # Add the new user to the database
+            hashed_password = _hash_password(password)
             new_user = self._db.add_user(email=email, hashed_password=hashed_password)
             
             return new_user
