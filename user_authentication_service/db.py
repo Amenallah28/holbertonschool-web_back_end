@@ -54,3 +54,27 @@ class DB:
         except AttributeError:
             raise InvalidRequestError
         
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """
+        Update the attributes of a user by user_id.
+
+        Args:
+            user_id (int): The ID of the user to update.
+            **kwargs: Arbitrary keyword arguments representing the attributes to update.
+
+        Raises:
+            ValueError: If any of the kwargs do not correspond to valid user attributes.
+        """
+        try:
+            user = self.find_user_by(id=user_id)
+
+            for key, value in kwargs.items():
+                if hasattr(user, key):
+                    setattr(user, key, value)
+                else:
+                    raise ValueError
+                self._session.commit()
+
+        except (NoResultFound, InvalidRequestError):
+            raise ValueError
+        
