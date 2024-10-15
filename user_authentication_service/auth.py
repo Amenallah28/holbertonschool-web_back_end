@@ -124,3 +124,4 @@ class Auth:
         self._db.update_user(user.id, hashed_password=pwd, reset_token=None)
         
         
+        
